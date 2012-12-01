@@ -1,4 +1,4 @@
-AS3 Window is a small library designed to simplify openning and controlling popup windows.
+AS3 Window is a small library designed to simplify opening and controlling popup windows via Actionscript.
 
 Example:
 var window:Window = new Window();
