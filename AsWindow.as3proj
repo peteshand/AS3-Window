@@ -4,12 +4,12 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="bin\Popup.swf" />
+    <movie path="bin\AsWindow.swf" />
     <movie fps="30" />
-    <movie width="440" />
-    <movie height="400" />
+    <movie width="800" />
+    <movie height="600" />
     <movie version="11" />
-    <movie minorVersion="3" />
+    <movie minorVersion="0" />
     <movie platform="Flash Player" />
     <movie background="#FFFFFF" />
   </output>
@@ -84,7 +84,7 @@
   <options>
     <option showHiddenPaths="False" />
     <option testMovie="OpenDocument" />
-    <option testMovieCommand="file:///C:/Users/pete/Google%20Drive/Work%20In%20Progress/Popups/01_Build/bin/index.html" />
+    <option testMovieCommand="file:///C:/Users/pete/Desktop/Git/asWindow2/bin/index.html" />
   </options>
   <!-- Plugin storage -->
   <storage />
