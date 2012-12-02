@@ -1,10 +1,15 @@
 package net.peteshand.asWindow 
 {
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
+	import net.peteshand.asWindow.events.WindowEvent;
+	import net.peteshand.asWindow.javascript.JsInterface;
+	
 	/**
 	 * ...
 	 * @author Pete Shand
 	 */
-	public class Window 
+	public class Window extends EventDispatcher
 	{
 		private var _index:int;
 		
@@ -12,6 +17,9 @@ package net.peteshand.asWindow
 		{
 			JsInterface.init();
 			_index = JsInterface.newWindow();
+			
+			JsInterface.addEventListener(WindowEvent.PROMPT_ANSWERED, OnPromptAnswered);
+			JsInterface.addEventListener(WindowEvent.CONFIRM_ANSWERED, OnConfirmAnswered);
 		}
 		
 		public function open(url:String):void
@@ -21,6 +29,53 @@ package net.peteshand.asWindow
 		public function close():void
 		{
 			JsInterface.close(index);
+		}
+		public function alert(msg:String):void
+		{
+			JsInterface.alert(index, msg);
+		}
+		public function consoleLog(msg:String):void
+		{
+			JsInterface.consoleLog(index, msg);
+		}
+		public function print():void
+		{
+			JsInterface.print(index);
+		}
+		public function prompt(msg:String, defaultText:String):void
+		{
+			JsInterface.prompt(index, msg, defaultText);
+		}
+		private function OnPromptAnswered(e:WindowEvent):void 
+		{
+			if (e.index == index) {
+				var windowEvent:WindowEvent = new WindowEvent(WindowEvent.PROMPT_ANSWERED);
+				windowEvent.value = e.value;
+				dispatchEvent(windowEvent);
+			}
+		}
+		
+		public function confirm(message:String):void
+		{
+			JsInterface.confirm(index, message);
+		}
+		private function OnConfirmAnswered(e:WindowEvent):void 
+		{
+			if (e.index == index) {
+				var windowEvent:WindowEvent = new WindowEvent(WindowEvent.CONFIRM_ANSWERED);
+				windowEvent.value = e.value;
+				dispatchEvent(windowEvent);
+			}
+		}
+		
+		public function focus():void
+		{
+			JsInterface.focus(index);
+		}
+		
+		public function blur():void
+		{
+			JsInterface.blur(index);
 		}
 		
 		public function get index():int 

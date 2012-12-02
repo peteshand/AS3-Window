@@ -1,4 +1,4 @@
-package net.peteshand.asWindow 
+package net.peteshand.asWindow.events 
 {
 	import flash.events.Event;
 	
@@ -11,6 +11,11 @@ package net.peteshand.asWindow
 		public static const MOVE:String = 'move';
 		public static const RESIZE:String = 'resize';
 		public static const CLOSE:String = 'close';
+		public static const PROMPT_ANSWERED:String = 'prompt_anwered';
+		public static const CONFIRM_ANSWERED:String = 'confirm_anwered';
+		
+		public var value:String = "";
+		public var index:int = -1;
 		
 		public function WindowEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false) 
 		{

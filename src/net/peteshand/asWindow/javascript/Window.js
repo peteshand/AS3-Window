@@ -1,5 +1,7 @@
 function (callbackID) {
 	var _this = this;
+	var openDelayValue = 2000;
+	
 	if (this.asWindow == undefined) {
 		this.asWindow = new Object();
 	}
@@ -7,8 +9,8 @@ function (callbackID) {
 	asWindow.newWindow = function() {
 		var windowObject = new WindowObject();
 		_this.asWindow.windows.push(windowObject);
-		var index = _this.asWindow.windows.length-1;
-		return index;
+		windowObject.index = _this.asWindow.windows.length-1;
+		return windowObject.index;
 	}
 	
 	asWindow.openWindow = function(index, url) {
@@ -18,16 +20,162 @@ function (callbackID) {
 	}
 	
 	asWindow.getWindow = function(index) {
-		return _this.asWindow.windows[index];
+		var returnWindow = _this.asWindow.windows[index];
+		if (returnWindow == null) returnWindow = window;
+		return returnWindow;
 	}
 	
 	
 	asWindow.closeWindow = function(index) {
 		var windowObject = asWindow.getWindow(index);
-		console.log(windowObject);
-		console.log("1close " + windowObject);
-		windowObject.windowRef.close();
+		windowObject.close();
 	}
+	
+	asWindow.alert = function(index, msg) {
+		var windowObject = asWindow.getWindow(index);
+		if (windowObject.windowState == 'open') {
+			if (windowObject.sameAsParentDomain == false) alert(msg);
+			else windowObject.windowRef.alert(msg);
+		}
+		else if (windowObject.windowState == 'opening') {
+			var _this = this;
+			setTimeout(function(){
+				if (windowObject.sameAsParentDomain == false) alert(msg);
+				else windowObject.windowRef.alert(msg);
+			},openDelayValue);
+		}
+		else {
+			alert(msg);
+		}
+	}
+	
+	asWindow.consoleLog = function(index, msg) {
+		var windowObject = asWindow.getWindow(index);
+		if (windowObject.windowState == 'open') {
+			if (windowObject.sameAsParentDomain == false) console.log(msg);
+			else windowObject.windowRef.console.log(msg);
+		}
+		else if (windowObject.windowState == 'opening') {
+			var _this = this;
+			setTimeout(function(){
+				if (windowObject.sameAsParentDomain == false) console.log(msg);
+				else windowObject.windowRef.console.log(msg);
+			},openDelayValue);
+		}
+		else {
+			console.log(msg);
+		}
+	}
+	
+	asWindow.prompt = function(index, msg, defaultText) {
+		var windowObject = asWindow.getWindow(index);
+		if (windowObject.windowState == 'open') {
+			if (windowObject.sameAsParentDomain == false) userInput = prompt(msg, defaultText);
+			else userInput = windowObject.windowRef.prompt(msg, defaultText);
+			fireCallback();
+		}
+		else if (windowObject.windowState == 'opening') {
+			var _this = this;
+			setTimeout(function(){
+				if (windowObject.sameAsParentDomain == false) userInput = prompt(msg, defaultText);
+				else userInput = windowObject.windowRef.prompt(msg, defaultText);
+				fireCallback();
+			},openDelayValue);
+		}
+		else {
+			userInput = prompt(msg, defaultText);
+			fireCallback();
+		}
+		
+		function fireCallback(){
+			if (callbackID) asWindow.swf.promptAnswered(windowObject.index, userInput);
+			else asWindow.alert( -1, "Warning, SWF Embed Issue: attributes.name has not been set to the same as the flash embed div's ID, this will prevent callbacks from working");
+			console.log('userInput = ' + userInput);
+		}
+	}
+	
+	asWindow.confirm = function(index, message) {
+		
+		var windowObject = asWindow.getWindow(index);
+		if (windowObject.windowState == 'open') {
+			if (windowObject.sameAsParentDomain == false) userAnswer = confirm(message);
+			else userAnswer = windowObject.windowRef.confirm(message);
+			fireCallback();
+		}
+		else if (windowObject.windowState == 'opening') {
+			var _this = this;
+			setTimeout(function(){
+				if (windowObject.sameAsParentDomain == false) userAnswer = confirm(message);
+				else userAnswer = windowObject.windowRef.confirm(message);
+				fireCallback();
+			},openDelayValue);
+		}
+		else {
+			userAnswer = confirm(message);
+			fireCallback();
+		}
+		
+		function fireCallback(){
+			console.log("userAnswer = " + userAnswer);
+			if (callbackID) asWindow.swf.confirmAnswered(windowObject.index, userAnswer);
+			else asWindow.alert( -1, "Warning, SWF Embed Issue: attributes.name has not been set to the same as the flash embed div's ID, this will prevent callbacks from working");
+		}
+	}
+	
+	asWindow.print = function(index) {
+		var windowObject = asWindow.getWindow(index);
+		if (windowObject.windowState == 'open') {
+			if (windowObject.sameAsParentDomain == false) print();
+			else windowObject.windowRef.print();
+		}
+		else if (windowObject.windowState == 'opening') {
+			var _this = this;
+			setTimeout(function(){
+				if (windowObject.sameAsParentDomain == false) print();
+				else windowObject.windowRef.print();
+			},openDelayValue);
+		}
+		else {
+			print();
+		}
+	}
+	
+	asWindow.focus = function(index) {
+		var windowObject = asWindow.getWindow(index);
+		if (windowObject.windowState == 'open') {
+			if (windowObject.sameAsParentDomain == false) focus();
+			else windowObject.windowRef.focus();
+		}
+		else if (windowObject.windowState == 'opening') {
+			var _this = this;
+			setTimeout(function(){
+				if (windowObject.sameAsParentDomain == false) focus();
+				else windowObject.windowRef.focus();
+			},openDelayValue);
+		}
+		else {
+			focus();
+		}
+	}
+	
+	asWindow.blur = function(index) {
+		var windowObject = asWindow.getWindow(index);
+		if (windowObject.windowState == 'open') {
+			if (windowObject.sameAsParentDomain == false) blur();
+			else windowObject.windowRef.blur();
+		}
+		else if (windowObject.windowState == 'opening') {
+			var _this = this;
+			setTimeout(function(){
+				if (windowObject.sameAsParentDomain == false) blur();
+				else windowObject.windowRef.blur();
+			},openDelayValue);
+		}
+		else {
+			blur();
+		}
+	}
+	
 	
 	asWindow.swf = function() {
 		if (navigator.appName.indexOf("Microsoft") != -1) {
@@ -56,6 +204,11 @@ function (callbackID) {
 	asWindow.setURL = function(index, value) 
 	{
 		asWindow.getWindow(index).setURL(value);
+	}
+	
+	asWindow.getWindowState = function(index) 
+	{
+		return asWindow.getWindow(index).windowState;
 	}
 	
 	asWindow.getChannelmode = function(index) 
@@ -237,6 +390,9 @@ function (callbackID) {
 	
 	function WindowObject() {
 		this.windowRef = null;
+		this.windowState = 'initialized';
+		this.sameAsParentDomain = false;
+		this.index = -1;
 		
 		this.width = null;
 		this.height = null;
@@ -267,10 +423,34 @@ function (callbackID) {
 		if (this.getOptionString() == "") this.windowRef = window.open(url, '_blank');
 		else this.windowRef = window.open(url, '_blank', this.getOptionString());
 		
+		this.windowState = 'opening';
+		
+		var _this = this;
+		setTimeout(function(){
+			_this.windowState = 'open';
+			
+			console.log(window.location);
+			console.log(_this.windowRef.location);
+			console.log("_this.windowRef.location.host = " + _this.windowRef.location.host);
+			
+			if (_this.windowRef.location.host == window.location.host && _this.windowRef.location.host != null) {
+				_this.sameAsParentDomain = true;
+			} else {
+				_this.sameAsParentDomain = false;
+			}
+			console.log("_this.sameAsParentDomain = " + _this.sameAsParentDomain);
+		},openDelayValue);
+		
+		
+		
+		
+		
 	};
 	WindowObject.prototype.close = function ()
 	{
 		console.log('close');
+		this.windowRef.close();
+		this.windowState = 'closed';
 	};
 	
 	WindowObject.prototype.getOptionString = function ()

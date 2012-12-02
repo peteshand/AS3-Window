@@ -4,18 +4,19 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="bin\AsWindow.swf" />
+    <movie path="bin\TwitterShare.swf" />
     <movie fps="30" />
     <movie width="800" />
     <movie height="600" />
-    <movie version="11" />
-    <movie minorVersion="0" />
+    <movie version="10" />
+    <movie minorVersion="1" />
     <movie platform="Flash Player" />
     <movie background="#FFFFFF" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
+    <class path="..\..\src" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -84,7 +85,7 @@
   <options>
     <option showHiddenPaths="False" />
     <option testMovie="OpenDocument" />
-    <option testMovieCommand="file:///C:/Users/pete/Desktop/Git/asWindow2/bin/index.html" />
+    <option testMovieCommand="bin/index.html" />
   </options>
   <!-- Plugin storage -->
   <storage />

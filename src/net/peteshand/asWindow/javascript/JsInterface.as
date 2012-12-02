@@ -1,11 +1,14 @@
-package net.peteshand.asWindow 
+package net.peteshand.asWindow.javascript 
 {
+	import flash.events.EventDispatcher;
+	import flash.events.Event;
 	import flash.external.ExternalInterface;
+	import net.peteshand.asWindow.events.WindowEvent;
 	/**
 	 * ...
 	 * @author Pete Shand
 	 */
-	public class JsInterface 
+	public class JsInterface
 	{
 		[Embed(source="Window.js", mimeType="application/octet-stream")]
 		private static const JsWindow:Class;
@@ -20,6 +23,9 @@ package net.peteshand.asWindow
 				 JsWindowString = new JsWindow();
 				trace('ExternalInterface.objectID = ' + ExternalInterface.objectID);
 				ExternalInterface.call(JsWindowString, ExternalInterface.objectID);
+				
+				ExternalInterface.addCallback("confirmAnswered", confirmAnswered);
+				ExternalInterface.addCallback("promptAnswered", promptAnswered);
 			}
 		}
 		public static function newWindow():int
@@ -30,6 +36,51 @@ package net.peteshand.asWindow
 		
 		public static function close(index:int):void
 		{ ExternalInterface.call("asWindow.closeWindow", index); }
+		
+		public static function alert(index:int ,msg:String):void
+		{ ExternalInterface.call("asWindow.alert", index, msg); }
+		
+		public static function consoleLog(index:int ,msg:String):void
+		{ ExternalInterface.call("asWindow.consoleLog", index, msg); }
+		
+		public static function print(index:int):void
+		{ ExternalInterface.call("asWindow.print", index); }
+		
+		public static function prompt(index:int, msg:String, defaultText:String):void
+		{
+			ExternalInterface.call("asWindow.prompt", index, msg, defaultText);
+		}
+		static private function promptAnswered(index:int, answer:String):void 
+		{
+			var windowEvent:WindowEvent = new WindowEvent(WindowEvent.PROMPT_ANSWERED);
+			windowEvent.value = answer;
+			windowEvent.index = index;
+			dispatchEvent(windowEvent);
+		}
+		
+		public static function confirm(index:int, message:String):void
+		{
+			ExternalInterface.call("asWindow.confirm", index, message);
+		}
+		static private function confirmAnswered(index:int, answer:String):void 
+		{
+			var windowEvent:WindowEvent = new WindowEvent(WindowEvent.CONFIRM_ANSWERED);
+			windowEvent.value = answer;
+			windowEvent.index = index;
+			dispatchEvent(windowEvent);
+		}
+		
+		public static function focus(index:int):void
+		{
+			ExternalInterface.call("asWindow.focus", index);
+		}
+		
+		public static function blur(index:int):void
+		{
+			ExternalInterface.call("asWindow.blur", index);
+		}
+		
+		
 		
 		public static function getHeight(index:int):int 
 		{ return int(ExternalInterface.call("asWindow.getHeight", index)); }
@@ -142,6 +193,21 @@ package net.peteshand.asWindow
 			if (value) return 'yes';
 			else return 'no';
 		}
+		
+		
+		
+		protected static var disp:EventDispatcher;
+		public static function addEventListener(p_type:String, p_listener:Function, p_useCapture:Boolean=false, p_priority:int=0, p_useWeakReference:Boolean=false):void {
+			if (disp == null) { disp = new EventDispatcher(); }
+			disp.addEventListener(p_type, p_listener, p_useCapture, p_priority, p_useWeakReference);
+		}
+		public static function removeEventListener(p_type:String, p_listener:Function, p_useCapture:Boolean=false):void {
+			if (disp == null) { return; }
+			disp.removeEventListener(p_type, p_listener, p_useCapture);
+		}
+		public static function dispatchEvent(p_event:WindowEvent):void {
+			if (disp == null) { return; }
+			disp.dispatchEvent(p_event);
+		}
 	}
-
 }
