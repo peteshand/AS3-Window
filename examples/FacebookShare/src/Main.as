@@ -19,7 +19,7 @@ package
 	public class Main extends Sprite 
 	{
 		private var window:FacebookWindow;
-		private var openButton:PushButton;
+		private var shareButton:PushButton;
 		private var closeButton:PushButton;
 		
 		public function Main():void 
@@ -35,19 +35,20 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
-			openButton = new PushButton(this, 10, 10, 'Share', OnClickOpen);
-			closeButton = new PushButton(this, 10, 10, 'Close', OnClickClose);
-			closeButton.visible = false;
-		}
-		
-		private function OnClickOpen(e:MouseEvent):void 
-		{
 			window = new FacebookWindow();
 			window.width = 640;
 			window.height = 220;
 			window.x = 100;
 			window.y = 100;
 			window.addEventListener(WindowEvent.CLOSE, OnWindowClose);
+			
+			shareButton = new PushButton(this, 10, 10, 'Facebook Share', OnClickShare);
+			closeButton = new PushButton(this, 10, 10, 'Close', OnClickClose);
+			closeButton.visible = false;
+		}
+		
+		private function OnClickShare(e:MouseEvent):void 
+		{
 			window.share("http://www.tvnz.co.nz");
 			switchButtonVisibility();
 		}
@@ -65,11 +66,11 @@ package
 		private function switchButtonVisibility():void
 		{
 			if (window.state == 'opening' || window.state == 'open') {
-				openButton.visible = false;
+				shareButton.visible = false;
 				closeButton.visible = true;
 			}
 			else {
-				openButton.visible = true;
+				shareButton.visible = true;
 				closeButton.visible = false;
 			}
 		}

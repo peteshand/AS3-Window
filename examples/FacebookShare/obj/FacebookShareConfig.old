@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'08/12/2012'</value>
+      <value>'12/02/2013'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -32,19 +32,19 @@
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>C:\Users\pete\Desktop\Git\asWindow\examples\FacebookShare\src</path-element>
-      <path-element>C:\Users\pete\Desktop\Git\asWindow\src</path-element>
-      <path-element>C:\Users\pete\Desktop\Git\asWindow\examples\ThirdPartySrc</path-element>
+      <path-element>D:\Work\GIT\AS3-Window\examples\FacebookShare\src</path-element>
+      <path-element>D:\Work\GIT\AS3-Window\src</path-element>
+      <path-element>D:\Work\GIT\AS3-Window\examples\ThirdPartySrc</path-element>
       <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>C:\Users\pete\Desktop\Git\asWindow\examples\FacebookShare\flas\Popup.swc</path-element>
+      <path-element>D:\Work\GIT\AS3-Window\examples\FacebookShare\flas\Popup.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>C:\Users\pete\Desktop\Git\asWindow\examples\FacebookShare\src\Main.as</path-element>
+    <path-element>D:\Work\GIT\AS3-Window\examples\FacebookShare\src\Main.as</path-element>
   </file-specs>
-  <default-background-color>#FFFFFF</default-background-color>
+  <default-background-color>#EEEEEE</default-background-color>
   <default-frame-rate>30</default-frame-rate>
   <default-size>
     <width>800</width>
