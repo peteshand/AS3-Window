@@ -20,7 +20,6 @@ package
 	{
 		private var window:FacebookWindow;
 		private var shareButton:PushButton;
-		private var closeButton:PushButton;
 		
 		public function Main():void 
 		{
@@ -40,39 +39,13 @@ package
 			window.height = 220;
 			window.x = 100;
 			window.y = 100;
-			window.addEventListener(WindowEvent.CLOSE, OnWindowClose);
 			
 			shareButton = new PushButton(this, 10, 10, 'Facebook Share', OnClickShare);
-			closeButton = new PushButton(this, 10, 10, 'Close', OnClickClose);
-			closeButton.visible = false;
 		}
 		
 		private function OnClickShare(e:MouseEvent):void 
 		{
 			window.share("http://www.tvnz.co.nz");
-			switchButtonVisibility();
-		}
-		
-		private function OnClickClose(e:MouseEvent):void 
-		{
-			window.close();
-		}
-		
-		private function OnWindowClose(e:WindowEvent):void 
-		{
-			switchButtonVisibility();
-		}
-		
-		private function switchButtonVisibility():void
-		{
-			if (window.state == 'opening' || window.state == 'open') {
-				shareButton.visible = false;
-				closeButton.visible = true;
-			}
-			else {
-				shareButton.visible = true;
-				closeButton.visible = false;
-			}
 		}
 	}
 }

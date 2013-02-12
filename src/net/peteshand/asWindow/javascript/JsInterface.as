@@ -35,6 +35,7 @@ package net.peteshand.asWindow.javascript
 		
 		static private function windowClose(index:int):void 
 		{
+			trace("JsInterface OnClose");
 			var windowEvent:WindowEvent = new WindowEvent(WindowEvent.CLOSE);
 			windowEvent.index = index;
 			dispatchEvent(windowEvent);
@@ -119,9 +120,6 @@ package net.peteshand.asWindow.javascript
 		{
 			return ExternalInterface.call("asWindow.getWindowState", index);
 		}
-		
-		
-		
 		
 		public static function getHeight(index:int):int 
 		{ return int(ExternalInterface.call("asWindow.getHeight", index)); }

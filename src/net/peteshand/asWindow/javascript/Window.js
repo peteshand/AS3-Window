@@ -21,6 +21,8 @@ function (callbackID) {
 		windowObject.open(url);
 		
 		console.log(windowObject.windowRef);
+		console.log('windowRef = ' + windowObject.windowRef);
+		
 		windowObject.windowRef.onload = function() {
 			console.log('onload');
 			if (callbackID) asWindow.swf.windowOpen(windowObject.index);
@@ -29,8 +31,10 @@ function (callbackID) {
 		
 		
 		
-		windowObject.windowRef.onbeforeunload = function() {
+		
+		windowObject.windowRef.onbeforeunload = function(evt) {
 			windowObject.windowState = 'closing';
+			console.log("callbackID = " + callbackID);
 			if (callbackID) asWindow.swf.windowClose(windowObject.index);
 			else asWindow.consoleLog( -1, "Warning, SWF Embed Issue: attributes.name has not been set to the same as the flash embed div's ID, this will prevent callbacks from working");
 		}
@@ -41,7 +45,6 @@ function (callbackID) {
 		if (returnWindow == null) returnWindow = window;
 		return returnWindow;
 	}
-	
 	
 	asWindow.closeWindow = function(index) {
 		var windowObject = asWindow.getWindow(index);
@@ -487,8 +490,8 @@ function (callbackID) {
 	WindowObject.prototype.close = function ()
 	{
 		console.log('close');
-		this.windowRef.close();
 		this.windowState = 'closed';
+		this.windowRef.close();
 	};
 	
 	WindowObject.prototype.getOptionString = function ()

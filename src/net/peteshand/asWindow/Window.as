@@ -1,5 +1,6 @@
 package net.peteshand.asWindow 
 {
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import net.peteshand.asWindow.events.WindowEvent;
@@ -12,6 +13,7 @@ package net.peteshand.asWindow
 	public class Window extends EventDispatcher
 	{
 		private var _index:int;
+		private var sprite:Sprite = new Sprite();
 		
 		public function Window() 
 		{

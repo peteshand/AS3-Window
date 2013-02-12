@@ -37,9 +37,7 @@
       <path-element>D:\Work\GIT\AS3-Window\examples\ThirdPartySrc</path-element>
       <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
-    <library-path append="true">
-      <path-element>D:\Work\GIT\AS3-Window\examples\FacebookShare\flas\Popup.swc</path-element>
-    </library-path>
+    <library-path append="true" />
   </compiler>
   <file-specs>
     <path-element>D:\Work\GIT\AS3-Window\examples\FacebookShare\src\Main.as</path-element>
