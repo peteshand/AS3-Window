@@ -36,7 +36,7 @@ package
 			twitterWindow.x = 100;
 			twitterWindow.y = 100;
 			
-			shareButton = new PushButton(this, 10, 10, 'TwitterShare', OnClickShare);
+			shareButton = new PushButton(this, 10, 10, 'Twitter Share', OnClickShare);
 		}
 		
 		private function OnClickShare(e:MouseEvent):void 
