@@ -2,6 +2,8 @@ function (callbackID) {
 	var _this = this;
 	var openDelayValue = 2000;
 	
+	console.log('callbackID = ' + callbackID);
+	
 	if (this.asWindow == undefined) {
 		this.asWindow = new Object();
 	}
@@ -15,8 +17,23 @@ function (callbackID) {
 	
 	asWindow.openWindow = function(index, url) {
 		var windowObject = asWindow.getWindow(index);
+		
 		windowObject.open(url);
-		console.log(windowObject);
+		
+		console.log(windowObject.windowRef);
+		windowObject.windowRef.onload = function() {
+			console.log('onload');
+			if (callbackID) asWindow.swf.windowOpen(windowObject.index);
+			else asWindow.consoleLog( -1, "Warning, SWF Embed Issue: attributes.name has not been set to the same as the flash embed div's ID, this will prevent callbacks from working");
+		}
+		
+		
+		
+		windowObject.windowRef.onbeforeunload = function() {
+			windowObject.windowState = 'closing';
+			if (callbackID) asWindow.swf.windowClose(windowObject.index);
+			else asWindow.consoleLog( -1, "Warning, SWF Embed Issue: attributes.name has not been set to the same as the flash embed div's ID, this will prevent callbacks from working");
+		}
 	}
 	
 	asWindow.getWindow = function(index) {
@@ -301,9 +318,20 @@ function (callbackID) {
 		asWindow.getWindow(index).setToolbar(value);
 	}
 	
+	asWindow.getUseProxy = function(index) 
+	{
+		return asWindow.getWindow(index).getUseProxy();
+	}
 	
+	asWindow.setUseProxy = function(index, value) 
+	{
+		asWindow.getWindow(index).setUseProxy(value);
+	}
 	
-	
+	asWindow.inject = function(index, value) 
+	{
+		//asWindow.getWindow(index).setUseProxy(value);
+	}
 	
 	
 	
@@ -392,6 +420,7 @@ function (callbackID) {
 		this.windowRef = null;
 		this.windowState = 'initialized';
 		this.sameAsParentDomain = false;
+		this.useProxy = false;
 		this.index = -1;
 		
 		this.width = null;
@@ -419,10 +448,19 @@ function (callbackID) {
 	{
 		console.log('open: ' + url);
 		console.log('getOptionString: ' + this.getOptionString());
+		console.log("this.useProxy = " + this.useProxy);
+		
+		if (this.useProxy == "true"){
+			console.log("use proxy");
+		}
+		else {
+			console.log("don't use proxy");
+		}
 		
 		if (this.getOptionString() == "") this.windowRef = window.open(url, '_blank');
 		else this.windowRef = window.open(url, '_blank', this.getOptionString());
 		
+
 		this.windowState = 'opening';
 		
 		var _this = this;
@@ -572,4 +610,16 @@ function (callbackID) {
 	{
 		this.toolbar = value;
 	}
+	
+	WindowObject.prototype.setUseProxy = function() 
+	{
+		return this.useProxy;
+	}
+	
+	WindowObject.prototype.setUseProxy = function(value) 
+	{
+		this.useProxy = value;
+	}
+	
+	
 }

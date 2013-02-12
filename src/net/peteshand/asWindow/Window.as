@@ -20,6 +20,40 @@ package net.peteshand.asWindow
 			
 			JsInterface.addEventListener(WindowEvent.PROMPT_ANSWERED, OnPromptAnswered);
 			JsInterface.addEventListener(WindowEvent.CONFIRM_ANSWERED, OnConfirmAnswered);
+			JsInterface.addEventListener(WindowEvent.OPEN, OnOpen);
+			JsInterface.addEventListener(WindowEvent.CLOSE, OnClose);
+			JsInterface.addEventListener(WindowEvent.MOVE, OnMove);
+			JsInterface.addEventListener(WindowEvent.RESIZE, OnResize);
+		}
+		
+		private function OnOpen(e:WindowEvent):void 
+		{
+			if (e.index == index) {
+				dispatchEvent(new WindowEvent(WindowEvent.OPEN));
+			}
+		}
+		
+		private function OnClose(e:WindowEvent):void 
+		{
+			if (e.index == index) {
+				dispatchEvent(new WindowEvent(WindowEvent.CLOSE));
+			}
+		}
+		
+		private function OnMove(e:WindowEvent):void 
+		{
+			if (e.index == index) {
+				var windowEvent:WindowEvent = new WindowEvent(WindowEvent.MOVE);
+				dispatchEvent(windowEvent);
+			}
+		}
+		
+		private function OnResize(e:WindowEvent):void 
+		{
+			if (e.index == index) {
+				var windowEvent:WindowEvent = new WindowEvent(WindowEvent.RESIZE);
+				dispatchEvent(windowEvent);
+			}
 		}
 		
 		public function open(url:String):void
@@ -29,6 +63,10 @@ package net.peteshand.asWindow
 		public function close():void
 		{
 			JsInterface.close(index);
+		}
+		public function get state():String
+		{
+			return JsInterface.getState(index);
 		}
 		public function alert(msg:String):void
 		{
@@ -151,6 +189,21 @@ package net.peteshand.asWindow
 		public function set url(value:String):void 
 		{
 			JsInterface.setURL(index, value);
+		}
+		
+		public function get useProxy():Boolean 
+		{
+			return JsInterface.getUseProxy(index);
+		}
+		
+		public function set useProxy(value:Boolean):void 
+		{
+			JsInterface.setUseProxy(index, value);
+		}
+		
+		public function inject(value:XML):void
+		{
+			JsInterface.inject(index, value);
 		}
 		
 		/*public function get channelmode():Boolean 

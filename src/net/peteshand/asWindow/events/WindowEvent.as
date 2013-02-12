@@ -11,6 +11,7 @@ package net.peteshand.asWindow.events
 		public static const MOVE:String = 'move';
 		public static const RESIZE:String = 'resize';
 		public static const CLOSE:String = 'close';
+		public static const OPEN:String = 'open';
 		public static const PROMPT_ANSWERED:String = 'prompt_anwered';
 		public static const CONFIRM_ANSWERED:String = 'confirm_anwered';
 		

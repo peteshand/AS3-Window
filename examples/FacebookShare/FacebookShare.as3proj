@@ -17,6 +17,7 @@
   <classpaths>
     <class path="src" />
     <class path="..\..\src" />
+    <class path="..\ThirdPartySrc" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -88,5 +89,8 @@
     <option testMovieCommand="bin\index.html" />
   </options>
   <!-- Plugin storage -->
-  <storage />
+  <storage>
+    <entry key="at_enabled"><![CDATA[0]]></entry>
+    <entry key="at_password"><![CDATA[]]></entry>
+  </storage>
 </project>

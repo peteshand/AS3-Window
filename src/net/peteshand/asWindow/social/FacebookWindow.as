@@ -15,6 +15,7 @@ package net.peteshand.asWindow.social
 			this.width = 640;
 			this.height = 220;
 			super();
+			this.useProxy = true;
 		}
 		
 		public function share(url:String):void

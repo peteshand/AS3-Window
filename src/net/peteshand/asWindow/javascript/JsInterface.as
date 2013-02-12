@@ -26,8 +26,43 @@ package net.peteshand.asWindow.javascript
 				
 				ExternalInterface.addCallback("confirmAnswered", confirmAnswered);
 				ExternalInterface.addCallback("promptAnswered", promptAnswered);
+				ExternalInterface.addCallback("windowClose", windowClose);
+				ExternalInterface.addCallback("windowOpen", windowOpen);
+				ExternalInterface.addCallback("windowMove", windowMove);
+				ExternalInterface.addCallback("windowResize", windowResize);
 			}
 		}
+		
+		static private function windowClose(index:int):void 
+		{
+			var windowEvent:WindowEvent = new WindowEvent(WindowEvent.CLOSE);
+			windowEvent.index = index;
+			dispatchEvent(windowEvent);
+		}
+		
+		static private function windowOpen(index:int):void 
+		{
+			var windowEvent:WindowEvent = new WindowEvent(WindowEvent.OPEN);
+			windowEvent.index = index;
+			dispatchEvent(windowEvent);
+		}
+		
+		static private function windowMove(index:int):void 
+		{
+			//var windowEvent:WindowEvent = new WindowEvent(WindowEvent.CONFIRM_ANSWERED);
+			//windowEvent.value = answer;
+			//windowEvent.index = index;
+			//dispatchEvent(windowEvent);
+		}
+		static private function windowResize(index:int):void 
+		{
+			//var windowEvent:WindowEvent = new WindowEvent(WindowEvent.CONFIRM_ANSWERED);
+			//windowEvent.value = answer;
+			//windowEvent.index = index;
+			//dispatchEvent(windowEvent);
+		}
+		
+		
 		public static function newWindow():int
 		{ return int(ExternalInterface.call("asWindow.newWindow")); }
 		
@@ -79,6 +114,12 @@ package net.peteshand.asWindow.javascript
 		{
 			ExternalInterface.call("asWindow.blur", index);
 		}
+		
+		public static function getState(index:int):String
+		{
+			return ExternalInterface.call("asWindow.getWindowState", index);
+		}
+		
 		
 		
 		
@@ -208,6 +249,22 @@ package net.peteshand.asWindow.javascript
 		public static function dispatchEvent(p_event:WindowEvent):void {
 			if (disp == null) { return; }
 			disp.dispatchEvent(p_event);
+		}
+		
+		static public function getUseProxy(index:int):Boolean 
+		{
+			return ExternalInterface.call("asWindow.getUseProxy", index);
+		}
+		
+		static public function setUseProxy(index:int, value:Boolean):void 
+		{
+			trace("set use proxy: " + value);
+			ExternalInterface.call("asWindow.setUseProxy", index, String(value));
+		}
+		
+		static public function inject(index:int, value:XML):void 
+		{
+			ExternalInterface.call("asWindow.inject", index, String(value));
 		}
 	}
 }
