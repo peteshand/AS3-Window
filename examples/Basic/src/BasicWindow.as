@@ -49,7 +49,7 @@ package
 			window.height = 350;
 			window.x = 50;
 			window.y = 250;
-			window.open('index.html');
+			window.open('http://maxgif.com');
 			window.addEventListener(WindowEvent.CLOSE, OnWindowClose);
 			switchButtonVisibility();
 		}

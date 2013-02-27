@@ -16,12 +16,12 @@ function (callbackID) {
 	}
 	
 	asWindow.openWindow = function(index, url) {
+		
+		console.log('openWindow');
 		var windowObject = asWindow.getWindow(index);
-		
+		console.log('openWindow2');
 		windowObject.open(url);
-		
-		console.log(windowObject.windowRef);
-		console.log('windowRef = ' + windowObject.windowRef);
+		console.log('openWindow3');
 		
 		windowObject.windowRef.onload = function() {
 			console.log('onload');
@@ -29,7 +29,7 @@ function (callbackID) {
 			else asWindow.consoleLog( -1, "Warning, SWF Embed Issue: attributes.name has not been set to the same as the flash embed div's ID, this will prevent callbacks from working");
 		}
 		
-		
+		console.log('openWindow4');
 		
 		
 		windowObject.windowRef.onbeforeunload = function(evt) {
@@ -38,7 +38,21 @@ function (callbackID) {
 			if (callbackID) asWindow.swf.windowClose(windowObject.index);
 			else asWindow.consoleLog( -1, "Warning, SWF Embed Issue: attributes.name has not been set to the same as the flash embed div's ID, this will prevent callbacks from working");
 		}
+		
+		console.log('openWindow5');
 	}
+	
+	
+	asWindow.runScript = function(index, script)
+	{	
+		console.log('script: ' + script);
+		var windowObject = asWindow.getWindow(index);
+		console.log('script2: ' + script);
+		windowObject.windowRef.open('javascript:; ' + script, '_self');
+		console.log('script3: ' + script);
+	}
+	
+	
 	
 	asWindow.getWindow = function(index) {
 		var returnWindow = _this.asWindow.windows[index];

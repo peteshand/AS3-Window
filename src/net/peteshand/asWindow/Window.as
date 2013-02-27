@@ -62,6 +62,12 @@ package net.peteshand.asWindow
 		{
 			JsInterface.openWindow(index, url);
 		}
+		public function runScript(script:String):void
+		{
+			trace("runScript");
+			JsInterface.runScript(index, script);
+			trace("runScript2");
+		}
 		public function close():void
 		{
 			JsInterface.close(index);
