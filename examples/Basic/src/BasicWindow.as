@@ -40,6 +40,10 @@ package
 		private function OnClickClose(e:MouseEvent):void 
 		{
 			window.close();
+			// if openning cross domain link, WindowEvent.CLOSE event will not fire
+			openButton.visible = true;
+			closeButton.visible = false;
+			//
 		}
 		
 		private function OnClickOpen(e:MouseEvent):void 
